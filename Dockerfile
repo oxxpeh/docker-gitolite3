@@ -20,21 +20,21 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 # ssh end
 
-COPY ssh_host_dsa_key /etc/ssh/
-COPY ssh_host_dsa_key.pub /etc/ssh/
-COPY ssh_host_ecdsa_key /etc/ssh/
-COPY ssh_host_ecdsa_key.pub /etc/ssh/
-COPY ssh_host_ed25519_key.pub /etc/ssh/
-COPY ssh_host_ed25519_key /etc/ssh/
-COPY ssh_host_rsa_key /etc/ssh/
-COPY ssh_host_rsa_key.pub /etc/ssh/
+# COPY ssh_host_dsa_key /etc/ssh/
+# COPY ssh_host_dsa_key.pub /etc/ssh/
+# COPY ssh_host_ecdsa_key /etc/ssh/
+# COPY ssh_host_ecdsa_key.pub /etc/ssh/
+# COPY ssh_host_ed25519_key.pub /etc/ssh/
+# COPY ssh_host_ed25519_key /etc/ssh/
+# COPY ssh_host_rsa_key /etc/ssh/
+# COPY ssh_host_rsa_key.pub /etc/ssh/
+# RUN chmod 600 /etc/ssh/ssh_host_*
 COPY admin.pub /tmp/
-RUN chmod 600 /etc/ssh/ssh_host_*
 
 RUN addgroup --gid ${GID}  gitolite3
 RUN adduser --system --shell /bin/bash --disabled-password\
  --home /home/gitolite3 --uid ${UID} --gid ${GID}  gitolite3
 
-#RUN su - gitolite3 -c "gitolite setup -pk /tmp/admin.pub"
+RUN su - gitolite3 -c "gitolite setup -pk /tmp/admin.pub"
 
 CMD ["/usr/sbin/sshd", "-D"]
