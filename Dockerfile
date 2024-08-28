@@ -1,4 +1,5 @@
-FROM ubuntu:24.04
+ARG UB_VER=24.04
+FROM ubuntu:${UB_VER}
 ARG GID=1001
 ARG PASS=PassWord
 ARG UID=1001
@@ -18,8 +19,9 @@ RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-# ssh end
+# -- ssh end
 
+# -- 移行のときはコメント外す
 # COPY ssh_host_dsa_key /etc/ssh/
 # COPY ssh_host_dsa_key.pub /etc/ssh/
 # COPY ssh_host_ecdsa_key /etc/ssh/
@@ -35,6 +37,7 @@ RUN addgroup --gid ${GID}  gitolite3
 RUN adduser --system --shell /bin/bash --disabled-password\
  --home /home/gitolite3 --uid ${UID} --gid ${GID}  gitolite3
 
+# -- 移行のときはコメント
 RUN su - gitolite3 -c "gitolite setup -pk /tmp/admin.pub"
 
 CMD ["/usr/sbin/sshd", "-D"]
