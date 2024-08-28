@@ -9,12 +9,13 @@ copy /XX/XX/admin.pub .
 # -- パスは適当なものに、Dockerファイルで指定しているので、名前は「admin.pub」で
 # -- 鍵の作り方は省略…
 curl --compressed -O https://raw.githubusercontent.com/oxxpeh/docker-gitolite3/main/Dockerfile
+# -- 「--compressed」するような大きさではないですが
 docker docker build -t gito3-img --build-arg PASS=rootPass  .
 # -- 「rootPass」指定しない場合コンテナのrootパスワードは「PassWord」になります。
 # -- proxy必要なら 「--build-arg HTTP_PROXY=http://192.168.1.1:3128」とか
 
 # -- Dockerホストのsshのポートとかぶります。ポート変換するするのもなんなのでmacvlanなるものを使用
-# -- すでにmacvlanのネットワーク定義ずみなら飛ばしいてください
+# -- すでにmacvlanのネットワーク定義ずみなら飛ばしてください
 docker network create -d macvlan \
   --subnet=192.168.1.0/24 \
   --ip-range=192.168.1.240/28 \
@@ -26,7 +27,7 @@ docker network create -d macvlan \
 # -- 使用してない場合は物理NIC(enpxx)とかに変えてください
 # -- 最後の「macnet」はネットワーク名になります。
 
-# -- 「docker.io」だけではなく「docker-buildx」もaptでinstallしておく
+# -- 「docker.io」だけではなく「docker-buildx」もaptでinstall
 docker run -d --network macnet --name gito --hostname gito --ip 192.168.1.100  gito3-img
 # -- クライアントから確認
 ssh gitolite3@192.168.1.100 -i admin-key
@@ -39,7 +40,7 @@ ssh gitolite3@192.168.1.100 -i admin-key
 # Connection to 192.168.1.100 closed.
 ```
 
-macvlanの制限なのか、ホストとコンテナ間の通信はなぜかできませんでした…   
+macvlanの制限なのか、ホストとコンテナ間の通信はなぜかできない…   
 ~~原因などは未調査…~~ 制限らしい(後述)                                                       
 ## その他
 ### macvlanの使用
@@ -91,8 +92,8 @@ tarコピーは諦めて各リポジトリでの「--mirror」オプション付
 >$ cd <ミラーでできた.gitフォルダ>
 >$ git push --mirror <移行先URL>
 
-「clone」と「push」後の物はtarコビーで正常動作
-また`--mount "type=bind,src=/xx/gtl3-data,dst=/home/gitolite3"`追加でホストディレクトリに直接書き込むようにしてみました
+「clone」と「push」後の物はtarコビーで正常動作  
+また`--mount "type=bind,src=/xx/gtl3-data,dst=/home/gitolite3"`追加でホストディレクトリに直接書き込むように
 
 「既存のtarコピー」はubuntuの「18.04」なら動作した  
 (22.04と20.4はダメ)  
