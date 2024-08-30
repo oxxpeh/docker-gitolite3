@@ -40,18 +40,10 @@ ssh gitolite3@192.168.1.100 -i admin-key
 # Connection to 192.168.1.100 closed.
 ```
 
-macvlanの制限なのか、ホストとコンテナ間の通信は~~なぜか~~できない…   
-~~原因などは未調査…~~ 制限らしい(後述)  
+。 macvlanの制限なのか、ホストとコンテナ間の通信は~~なぜか~~できない…   
+ ~~原因などは未調査…~~ 制限らしい(後述)  
   
-`docker stop`コマンドでの停止に10秒程度時間がかかります…
-
-<span style="color: #38761d;"><br>(参)<br>立ち上げたDockerが終了するのが遅い<br>https://zenn.dev/mtlom/articles/fb990ddfa6a338</span><br>
->PID1でinit以外のプログラムやSIGTERMを処理しないプログラムがあると、終了しない。
->initのサブプロセスとしてbashを実行していたとしても、SIGTERMを無視するため終了しない。
-
-`docker exec gito kill -s SIGTERM 1`だと即停止するので  
-「SIGTERM」を処理してないわけではないようですが…
-「run」時に「--init」追加して「docker-init」から「sshd」の起動にしても変わらなかった
+・ `docker stop`コマンドでの停止に10秒程度時間がかかります…(後述)
 
 ## その他
 ### macvlanの使用
@@ -70,6 +62,16 @@ Dockerで既存のブリッジの指定ができなさそう、対策として�
 <span style="color: #38761d;"><br>(参)<br>macvlan ネットワークの使用 — Docker-docs-ja 24.0 ドキュメント<br>https://docs.docker.jp/network/macvlan.html</span><br>
 <span style="color: #38761d;"><br>(参)<br>docker network create — Docker-docs-ja 24.0 ドキュメント<br>https://docs.docker.jp/engine/reference/commandline/network_create.html</span><br>
 <span style="color: #38761d;"><br>(参)<br>KVMとDockerの両方が入った環境の構築 - メモ - (有)その弐<br>https://sononi.com/memo/2019/06/17/kvmdockercoexist/</span><br>
+
+### docker stopが遅い
+<span style="color: #38761d;"><br>(参)<br>立ち上げたDockerが終了するのが遅い<br>https://zenn.dev/mtlom/articles/fb990ddfa6a338</span><br>
+>PID1でinit以外のプログラムやSIGTERMを処理しないプログラムがあると、終了しない。
+>initのサブプロセスとしてbashを実行していたとしても、SIGTERMを無視するため終了しない。
+
+`docker exec gito kill -s SIGTERM 1`だと即停止するので  
+「SIGTERM」を処理してないわけではないようですが…  
+「run」時に「--init」追加して「docker-init」から「sshd」の起動にしても変わらなかった
+
 
 ### 既存データの移行
 gitolite3の利用暦
