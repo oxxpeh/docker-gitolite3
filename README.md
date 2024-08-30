@@ -40,8 +40,19 @@ ssh gitolite3@192.168.1.100 -i admin-key
 # Connection to 192.168.1.100 closed.
 ```
 
-macvlanの制限なのか、ホストとコンテナ間の通信はなぜかできない…   
-~~原因などは未調査…~~ 制限らしい(後述)                                                       
+macvlanの制限なのか、ホストとコンテナ間の通信は~~なぜか~~できない…   
+~~原因などは未調査…~~ 制限らしい(後述)  
+  
+`docker stop`コマンドでの停止に10秒程度時間がかかります…
+
+<span style="color: #38761d;"><br>(参)<br>立ち上げたDockerが終了するのが遅い<br>https://zenn.dev/mtlom/articles/fb990ddfa6a338</span><br>
+>PID1でinit以外のプログラムやSIGTERMを処理しないプログラムがあると、終了しない。
+>initのサブプロセスとしてbashを実行していたとしても、SIGTERMを無視するため終了しない。
+
+`docker exec gito kill -s SIGTERM 1`だと即停止するので  
+「SIGTERM」を処理してないわけではないようですが…
+「run」時に「--init」追加して「docker-init」から「sshd」の起動にしても変わらなかった
+
 ## その他
 ### macvlanの使用
 Dockerで既存のブリッジの指定ができなさそう、対策として以下がありそう
