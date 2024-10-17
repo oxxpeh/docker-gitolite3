@@ -119,5 +119,7 @@ kvmと比べてDockerだと確認が楽だった
 <span style="color: #38761d;"><br>(参)<br>Dockerでmacvlanを使う | Reafnex<br>https://reafnex.net/it/it-container/how-to-use-docker-macvlan/</span><br>
 
 ## 履歴
+2024/10/17
+・ubuntu 24.10に移行 gitolite3は「3.6.12-1」のまま
 2024/08/28  
 ・コンテナubuntu 24.04で確認
