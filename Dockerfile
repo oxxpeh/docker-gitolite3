@@ -30,8 +30,8 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 # COPY ssh_host_ed25519_key /etc/ssh/
 # COPY ssh_host_rsa_key /etc/ssh/
 # COPY ssh_host_rsa_key.pub /etc/ssh/
+# RUN chmod 600 /etc/ssh/ssh_host_*
 COPY admin.pub /mnt/
-RUN chmod 600 /etc/ssh/ssh_host_*
 
 RUN addgroup --gid 1001  gitolite3
 RUN adduser --system --shell /bin/bash --disabled-password\
