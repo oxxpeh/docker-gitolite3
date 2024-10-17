@@ -21,15 +21,15 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 # ssh end
-
-COPY ssh_host_dsa_key /etc/ssh/
-COPY ssh_host_dsa_key.pub /etc/ssh/
-COPY ssh_host_ecdsa_key /etc/ssh/
-COPY ssh_host_ecdsa_key.pub /etc/ssh/
-COPY ssh_host_ed25519_key.pub /etc/ssh/
-COPY ssh_host_ed25519_key /etc/ssh/
-COPY ssh_host_rsa_key /etc/ssh/
-COPY ssh_host_rsa_key.pub /etc/ssh/
+# 移行のときは鍵ファイル用意してコメント外す
+# COPY ssh_host_dsa_key /etc/ssh/
+# COPY ssh_host_dsa_key.pub /etc/ssh/
+# COPY ssh_host_ecdsa_key /etc/ssh/
+# COPY ssh_host_ecdsa_key.pub /etc/ssh/
+# COPY ssh_host_ed25519_key.pub /etc/ssh/
+# COPY ssh_host_ed25519_key /etc/ssh/
+# COPY ssh_host_rsa_key /etc/ssh/
+# COPY ssh_host_rsa_key.pub /etc/ssh/
 COPY admin.pub /mnt/
 RUN chmod 600 /etc/ssh/ssh_host_*
 
