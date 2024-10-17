@@ -214,7 +214,6 @@ $ docker inspect -s gito24 | grep Size
             "ShmSize": 67108864,
         "SizeRw": 135739240,
         "SizeRootFs": 519456056,
-[20:11:16]nyobita@nuc:/home/work/docker/git
 $ docker inspect -s gtl-o | grep Size
             "ConsoleSize": [
             "ShmSize": 67108864,
