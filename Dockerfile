@@ -36,7 +36,7 @@ COPY admin.pub /mnt/
 RUN addgroup --gid 1001  gitolite3
 RUN adduser --system --shell /bin/bash --disabled-password\
  --home /home/gitolite3 --uid 1001 --gid 1001  gitolite3
-
+# -- 移行のときはコメント
 RUN su - gitolite3 -c "gitolite setup -pk /mnt/admin.pub"
 
 CMD ["/usr/sbin/sshd", "-D"]
